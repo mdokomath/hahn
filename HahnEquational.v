@@ -375,9 +375,11 @@ Section PropertiesSeqUnion.
 
 End PropertiesSeqUnion.
 
-Hint Rewrite seq_false_l seq_false_r union_false_l union_false_r unionK : hahn.
-Hint Rewrite seq_id_l seq_id_r seq_eqvK : hahn.
+#[export] 
+Hint Rewrite seq_false_l seq_false_r union_false_l union_false_r unionK
+             seq_id_l seq_id_r seq_eqvK : hahn.
 
+#[export] 
 Hint Rewrite seq_bunion_l seq_bunion_r seq_union_l seq_union_r : hahn_full.
 
 (******************************************************************************)
@@ -480,6 +482,7 @@ Section PropertiesInter.
 
 End PropertiesInter.
 
+#[export] 
 Hint Rewrite inter_false_l inter_false_r interK : hahn.
 
 (******************************************************************************)
@@ -505,6 +508,7 @@ Section PropertiesMinus.
 
 End PropertiesMinus.
 
+#[export] 
 Hint Rewrite minus_false_l minus_false_r minusK : hahn.
 
 (******************************************************************************)
@@ -757,6 +761,7 @@ Section PropertiesClos.
   Qed.
 End PropertiesClos.
 
+#[export] 
 Hint Rewrite cr_of_ct cr_of_cr cr_of_rt
   ct_of_ct ct_of_cr ct_of_rt
   rt_of_ct rt_of_cr rt_of_rt : hahn.
@@ -960,6 +965,7 @@ Lemma seq_eqv_minus_ll A (s : A -> Prop) (r r' : relation A) :
   (⦗s⦘ ⨾ r) \ r' ≡ ⦗s⦘ ⨾ (r \ r').
 Proof. autounfold with unfolderDb; intuition; desf; eauto. Qed.
 
+#[export] 
 Hint Rewrite eqv_empty : hahn.
 
 (******************************************************************************)
@@ -1115,7 +1121,9 @@ Section TranspProperties.
 
 End TranspProperties.
 
+#[export] 
 Hint Rewrite transp_inv transp_cross transp_eqv_rel : hahn.
+#[export] 
 Hint Rewrite transp_inv transp_cross transp_eqv_rel transp_union transp_seq 
   transp_inter transp_minus transp_rt transp_ct transp_cr : rel_transp.
 
@@ -1282,6 +1290,7 @@ Proof.
   by ins; rewrite pow_rt, rt_of_trans.
 Qed.
 
+#[export] 
 Hint Rewrite pow_1 pow_0 : hahn.
 Global Hint Resolve pow_rt : hahn.
 
@@ -1323,6 +1332,7 @@ Section PropertiesCross.
 
 End PropertiesCross.
 
+#[export] 
 Hint Rewrite cross_false_l cross_false_r : hahn.
 
 (******************************************************************************)
@@ -1416,8 +1426,9 @@ Section PropertiesCollectRel.
 
 End PropertiesCollectRel.
 
-Hint Rewrite collect_rel_empty collect_rel_cross : hahn.
-Hint Rewrite collect_rel_union collect_rel_bunion : hahn.
+#[export] 
+Hint Rewrite collect_rel_empty collect_rel_cross
+             collect_rel_union collect_rel_bunion : hahn.
 
 (******************************************************************************)
 (** ** Properties of symmetry *)
@@ -1586,7 +1597,7 @@ Lemma acyclic_case_split A (r : relation A) f :
   acyclic (restr_rel f r) /\ (forall x (NEG: ~ f x) (CYC: r⁺ x x), False).
 Proof.
   unfold restr_rel; repeat split; repeat red; ins; desc; eauto.
-    by eapply H, clos_trans_mon; eauto; instantiate; ins; desf.
+    by eapply H, clos_trans_mon; eauto; ins; desf.
   destruct (classic (f x)) as [K|K]; eauto.
   assert (M: (fun a b => r a b /\ f a /\ f b) ＊ x x) by vauto.
   generalize K; revert H0 M K; generalize x at 2 3 5; ins.
@@ -1594,7 +1605,7 @@ Proof.
   destruct (classic (f y)); eauto 6 using clos_refl_trans.
   eapply H1; eauto.
   eapply t_rt_trans, rt_trans; eauto using t_step, clos_trans_in_rt, clos_tn1_trans.
-  by eapply clos_refl_trans_mon; eauto; instantiate; ins; desf.
+  by eapply clos_refl_trans_mon; eauto; ins; desf.
 Qed.
 
 Lemma seqA2 A (r r' r'' : relation A) x y :
