@@ -8,15 +8,18 @@
 
 (** Symbols starting with [hahn__] are internal. *)
 
-Require Import Bool Arith ZArith String.
-Require ClassicalFacts.
-Require Export ClassicalDescription IndefiniteDescription FunctionalExtensionality.
+From Stdlib Require Import Bool Arith ZArith String.
+From Stdlib Require ClassicalFacts.
+From Stdlib Require Export ClassicalDescription IndefiniteDescription FunctionalExtensionality.
 
 Open Scope bool_scope.
 Open Scope list_scope.
 
 Set Implicit Arguments.
 Unset Strict Implicit.
+
+Ltac Tauto.intuition_solver ::= auto with *. (* Forward compatibility. 
+                                                At some point defalt will be changed to just auto. *)
 
 (** Set up hint databases *)
 Create HintDb hahn discriminated.      (* General stuff, used by done *)
